@@ -170,7 +170,7 @@ export default function VotePage() {
               </p>
               {current.audioUrl ? (
                 <audio ref={audioRef} controls className="w-full" style={{ accentColor: "#BF5FFF" }}>
-                  <source src={current.audioUrl} type="audio/mpeg" />
+                  <source src={current.audioUrl} />
                 </audio>
               ) : (
                 <p className="text-[#8888AA] text-sm" style={{ fontFamily: "var(--font-inter)" }}>Audio unavailable.</p>

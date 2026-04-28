@@ -163,17 +163,21 @@ export default function BattleLobbyPage() {
 
   async function submitMix(file: File) {
     setUploadError("");
-    if (file.size > 20 * 1024 * 1024) {
-      setUploadError("File too large. Maximum 20MB.");
+    const isMp3 = file.type.includes("mp3") || file.name.endsWith(".mp3");
+    const isWav = file.type.includes("wav") || file.name.endsWith(".wav");
+
+    if (!isMp3 && !isWav) {
+      setUploadError("Only MP3 or WAV files are accepted.");
       return;
     }
-    if (!file.type.includes("mp3") && !file.name.endsWith(".mp3")) {
-      setUploadError("Only MP3 files are accepted.");
+    if (file.size > 50 * 1024 * 1024) {
+      setUploadError("File too large. Maximum 50MB.");
       return;
     }
     setUploading(true);
     const supabase = createClient();
-    const path = `mixes/${battleId}/${userId}_${Date.now()}.mp3`;
+    const ext = isWav ? "wav" : "mp3";
+    const path = `mixes/${battleId}/${userId}_${Date.now()}.${ext}`;
 
     const { error: uploadErr } = await supabase.storage
       .from("mixes")
@@ -298,7 +302,7 @@ export default function BattleLobbyPage() {
             style={{ background: "rgba(15,15,26,0.7)" }}
           >
             <h3 className="text-[#F5F5F5] font-semibold mb-1" style={{ fontFamily: "var(--font-space-grotesk)" }}>Submit Your Mix</h3>
-            <p className="text-[#8888AA] text-xs mb-5" style={{ fontFamily: "var(--font-inter)" }}>MP3 only · max 20MB</p>
+            <p className="text-[#8888AA] text-xs mb-5" style={{ fontFamily: "var(--font-inter)" }}>MP3 or WAV · max 50MB</p>
 
             {!isParticipant ? (
               <button
@@ -319,7 +323,7 @@ export default function BattleLobbyPage() {
               </div>
             ) : (
               <>
-                <input ref={fileRef} type="file" accept=".mp3,audio/mpeg" className="hidden" onChange={(e) => e.target.files?.[0] && submitMix(e.target.files[0])} />
+                <input ref={fileRef} type="file" accept=".mp3,.wav,audio/mpeg,audio/wav" className="hidden" onChange={(e) => e.target.files?.[0] && submitMix(e.target.files[0])} />
                 <button
                   onClick={() => fileRef.current?.click()}
                   disabled={uploading}

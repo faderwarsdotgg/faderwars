@@ -158,7 +158,7 @@ export default function RevealPage() {
               {/* Audio */}
               {result.audioUrl && (
                 <audio controls className="w-full mb-4" style={{ accentColor: "#BF5FFF" }}>
-                  <source src={result.audioUrl} type="audio/mpeg" />
+                  <source src={result.audioUrl} />
                 </audio>
               )}
 
