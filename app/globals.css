@@ -1,26 +1,33 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* Fonts */
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-space-grotesk);
+  --font-mono: var(--font-jetbrains-mono);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* FaderWars Color Palette */
+  --color-fw-bg: #07070F;
+  --color-fw-surface: #0F0F1A;
+  --color-fw-border: #1E1E35;
+  --color-fw-purple: #BF5FFF;
+  --color-fw-pink: #C084FC;
+  --color-fw-text: #F5F5F5;
+  --color-fw-muted: #8888AA;
+  --color-fw-gold: #FFD700;
+
+  /* Rank Colors */
+  --color-rank-noise: #888888;
+  --color-rank-mono: #FFFFFF;
+  --color-rank-stereo: #22C55E;
+  --color-rank-reference: #3B82F6;
+  --color-rank-studio: #A855F7;
+  --color-rank-mastery: #F97316;
+  --color-rank-legend: #FFD700;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #07070F;
+  color: #F5F5F5;
+  font-family: var(--font-inter), sans-serif;
 }
