@@ -78,15 +78,15 @@ export default function HomePage() {
           FADERWARS
         </h1>
         <div className="flex items-center gap-6">
-          <span className="text-[#8888AA] text-sm" style={{ fontFamily: "var(--font-inter)" }}>
+          <a href="/pit" className="text-[#8888AA] text-sm hover:text-[#F5F5F5] transition-colors" style={{ fontFamily: "var(--font-inter)" }}>
             The Pit
-          </span>
-          <span className="text-[#8888AA] text-sm" style={{ fontFamily: "var(--font-inter)" }}>
+          </a>
+          <a href="/leaderboard" className="text-[#8888AA] text-sm hover:text-[#F5F5F5] transition-colors" style={{ fontFamily: "var(--font-inter)" }}>
             Leaderboard
-          </span>
-          <span className="text-[#8888AA] text-sm" style={{ fontFamily: "var(--font-inter)" }}>
+          </a>
+          <a href="/profile" className="text-[#8888AA] text-sm hover:text-[#F5F5F5] transition-colors" style={{ fontFamily: "var(--font-inter)" }}>
             Profile
-          </span>
+          </a>
           <button
             onClick={signOut}
             className="px-4 py-1.5 rounded-lg border border-[#1E1E35] text-[#8888AA] text-xs hover:border-[#BF5FFF] hover:text-[#F5F5F5] transition-all"
