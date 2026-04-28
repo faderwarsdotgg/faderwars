@@ -10,7 +10,7 @@ type Battle = {
   mode: "chill" | "standard" | "rush";
   status: string;
   ends_at: string | null;
-  stem_sets: { title: string; artist_name: string; spotify_url?: string } | null;
+  stem_sets: { title: string; artist_name: string; spotify_url?: string; stems_download_url?: string } | null;
 };
 
 type Participant = {
@@ -107,7 +107,7 @@ export default function BattleLobbyPage() {
 
       const { data: b } = await supabase
         .from("battles")
-        .select("id, mode, status, ends_at, stem_sets(title, artist_name, spotify_url)")
+        .select("id, mode, status, ends_at, stem_sets(title, artist_name, spotify_url, stems_download_url)")
         .eq("id", battleId)
         .single();
 
@@ -241,9 +241,24 @@ export default function BattleLobbyPage() {
             <h2 className="text-2xl font-bold text-[#F5F5F5] mb-0.5" style={{ fontFamily: "var(--font-space-grotesk)" }}>
               {battle.stem_sets?.title || "Unknown Track"}
             </h2>
-            <p className="text-[#8888AA] text-sm" style={{ fontFamily: "var(--font-inter)" }}>
+            <p className="text-[#8888AA] text-sm mb-4" style={{ fontFamily: "var(--font-inter)" }}>
               by {battle.stem_sets?.artist_name || "Unknown Artist"}
             </p>
+            {battle.stem_sets?.stems_download_url ? (
+              <a
+                href={battle.stem_sets.stems_download_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-[#1E1E35] text-[#8888AA] text-xs font-semibold hover:border-[#BF5FFF] hover:text-[#F5F5F5] transition-all"
+                style={{ fontFamily: "var(--font-inter)" }}
+              >
+                ↓ Download Stems
+              </a>
+            ) : (
+              <span className="text-[#8888AA] text-xs" style={{ fontFamily: "var(--font-inter)" }}>
+                Stems download not available yet.
+              </span>
+            )}
           </motion.div>
 
           {/* Countdown */}
