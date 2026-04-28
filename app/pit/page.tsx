@@ -74,7 +74,7 @@ export default function PitPage() {
         return { ...b, participant_count: count || 0 };
       }));
 
-      setBattles(battles as Battle[]);
+      setBattles(battles as unknown as Battle[]);
       setLoading(false);
     }
     load();
