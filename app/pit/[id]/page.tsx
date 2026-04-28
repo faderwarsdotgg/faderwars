@@ -114,6 +114,10 @@ export default function BattleLobbyPage() {
       if (!b) { router.push("/pit"); return; }
       setBattle(b as unknown as Battle);
 
+      if (b.status === "voting" || b.status === "completed") {
+        router.push(`/pit/${battleId}/vote`);
+        return;
+      }
       if (b.ends_at && new Date(b.ends_at).getTime() < Date.now()) setExpired(true);
 
       const { data: parts } = await supabase
@@ -138,6 +142,13 @@ export default function BattleLobbyPage() {
     }
     load();
   }, [battleId, router]);
+
+  async function handleExpire() {
+    setExpired(true);
+    const supabase = createClient();
+    await supabase.from("battles").update({ status: "voting" }).eq("id", battleId).eq("status", "active");
+    setTimeout(() => router.push(`/pit/${battleId}/vote`), 2000);
+  }
 
   async function joinBattle() {
     const supabase = createClient();
@@ -272,7 +283,7 @@ export default function BattleLobbyPage() {
             {expired ? (
               <p className="text-[#F97316] font-semibold" style={{ fontFamily: "var(--font-jetbrains-mono)" }}>Battle ended</p>
             ) : battle.ends_at ? (
-              <Countdown endsAt={battle.ends_at} onExpire={() => setExpired(true)} />
+              <Countdown endsAt={battle.ends_at} onExpire={handleExpire} />
             ) : (
               <p className="text-[#8888AA]" style={{ fontFamily: "var(--font-jetbrains-mono)" }}>—</p>
             )}
