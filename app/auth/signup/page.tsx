@@ -19,21 +19,16 @@ export default function SignUpPage() {
   async function validateInvite() {
     setError("");
     setLoading(true);
-    const supabase = createClient();
-    const { data, error } = await supabase
-      .from("invite_codes")
-      .select("id, is_active, used_by, expires_at")
-      .eq("code", inviteCode.trim().toUpperCase())
-      .single();
 
+    const res = await fetch("/api/validate-invite", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code: inviteCode }),
+    });
+    const result = await res.json();
     setLoading(false);
-    console.log("DEBUG invite check:", { data, error });
 
-    if (error || !data) return setError(`Invalid invite code. (${error?.message || "not found"})`);
-    if (!data.is_active) return setError("This invite code is no longer active.");
-    if (data.used_by) return setError("This invite code has already been used.");
-    if (data.expires_at && new Date(data.expires_at) < new Date())
-      return setError("This invite code has expired.");
+    if (!result.valid) return setError(result.error || "Invalid invite code.");
 
     setStep("account");
   }
