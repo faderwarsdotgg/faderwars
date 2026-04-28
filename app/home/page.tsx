@@ -134,12 +134,13 @@ export default function HomePage() {
               {profile?.xp} XP
             </span>
             {profile?.role === "admin" && (
-              <span
-                className="text-xs px-3 py-1 rounded-full border border-[#BF5FFF] text-[#BF5FFF]"
+              <a
+                href="/admin"
+                className="text-xs px-3 py-1 rounded-full border border-[#BF5FFF] text-[#BF5FFF] hover:bg-[#BF5FFF20] transition-all"
                 style={{ fontFamily: "var(--font-jetbrains-mono)" }}
               >
                 ADMIN
-              </span>
+              </a>
             )}
           </div>
         </motion.div>
