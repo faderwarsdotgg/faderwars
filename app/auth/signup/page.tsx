@@ -27,8 +27,9 @@ export default function SignUpPage() {
       .single();
 
     setLoading(false);
+    console.log("DEBUG invite check:", { data, error });
 
-    if (error || !data) return setError("Invalid invite code.");
+    if (error || !data) return setError(`Invalid invite code. (${error?.message || "not found"})`);
     if (!data.is_active) return setError("This invite code is no longer active.");
     if (data.used_by) return setError("This invite code has already been used.");
     if (data.expires_at && new Date(data.expires_at) < new Date())
